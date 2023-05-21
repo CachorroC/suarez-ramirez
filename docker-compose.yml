@@ -1,0 +1,50 @@
+version: "3"
+
+services:
+  app:
+    container_name: app
+    hostname: app
+    image: app:latest
+    build:
+      context: .
+      dockerfile: ./apps/web/Dockerfile
+    restart: always
+    expose:
+      - 3000
+    ports:
+      - 3000:3000
+    networks:
+      - external
+      - internal
+  api:
+    container_name: api
+    hostname: api
+    build:
+      context: .
+      dockerfile: ./apps/api/Dockerfile
+    restart: always
+    ports:
+      - 3001:3001
+    networks:
+      - external
+      - internal
+  cloudflared:
+    image: cloudflare/cloudflared:latest #update the verion where necessary
+    container_name: cloudflared
+    restart: unless-stopped
+    networks:
+      - external
+      - internal
+    command: tunnel --no-autoupdate run --token eyJhIjoiZWQ2NmE1NDZlYWVhMWNlMDBlYjE2YmI1Yzc1NmFkY2EiLCJ0IjoiYzI2MmFhYTYtOTVkYi00YzE5LTk4NzktZTI2YzMwMTg1YmU4IiwicyI6Ik1HSTRNR05pT0RndE4ySXpNUzAwWWpjeUxUa3laakl0TmpZMll6WTBZMk16TVRSaiJ9
+    volumes:
+      - /opt/appdata/cloudflared/data:/home/nonroot/.cloudflared/
+
+# Define a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+networks:
+  external:
+    external: true
+    name: external
+  internal:
+    external: true
+    name: internal
