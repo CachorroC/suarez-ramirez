@@ -1,5 +1,6 @@
 {
-  "name": "with-docker",
+  "name": "suarez-ramirez",
+  "packageManager": "yarn@3.5.1",
   "version": "0.0.0",
   "private": true,
   "workspaces": [
@@ -21,9 +22,9 @@
     "eslint-config-custom": "*",
     "eslint-plugin-react": "^7.32.2",
     "prettier": "^2.8.8",
-    "turbo": "^1.9.3"
+    "turbo": "^1.9.3",
+    "typescript": "^5.0.4"
   },
-  "packageManager": "yarn@1.22.19",
   "engines": {
     "node": ">=14.0.0",
     "npm": ">=7.0.0"
